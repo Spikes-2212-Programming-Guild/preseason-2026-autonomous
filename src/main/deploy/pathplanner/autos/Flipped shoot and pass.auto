@@ -1,0 +1,44 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "aligned shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Fliped Shoot and toss start"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fliped Shoot and toss 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "collect and pass"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

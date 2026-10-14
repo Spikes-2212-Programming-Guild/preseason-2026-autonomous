@@ -17,10 +17,11 @@ import java.util.function.Supplier;
  * @author Gil Ein-Gar
  * @see SwerveDrivetrain
  */
-public class RotateSwerveWithPID extends Command { //@TODO change the name
+public class RotateSwerveWithPID extends Command {
 
     private final SwerveDrivetrain drivetrain;
     private final Supplier<Double> setpoint;
+    private final Supplier<Double> source;
 
     private final boolean useVelocityPID;
 
@@ -48,11 +49,13 @@ public class RotateSwerveWithPID extends Command { //@TODO change the name
      * @param feedForwardSettings the feed forward settings of the given {@link SwerveDrivetrain} rotational movement
      * @param useVelocityPID      whether the module will drive with P.I.D for the velocity
      */
-    public RotateSwerveWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> xSpeed,
-                               Supplier<Double> ySpeed, PIDSettings pidSettings,
+    public RotateSwerveWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> source,
+                               Supplier<Double> xSpeed, Supplier<Double> ySpeed, PIDSettings pidSettings,
                                FeedForwardSettings feedForwardSettings, boolean useVelocityPID) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.setpoint = setpoint;
+        this.source = source;
         this.pidSettings = pidSettings;
         this.feedForwardSettings = feedForwardSettings;
 
@@ -78,9 +81,10 @@ public class RotateSwerveWithPID extends Command { //@TODO change the name
      * @param feedForwardSettings the feed forward settings of the given {@link SwerveDrivetrain} rotational movement
      * @param useVelocityPID      whether the module will drive with P.I.D for the velocity
      */
-    public RotateSwerveWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, PIDSettings pidSettings,
-                               FeedForwardSettings feedForwardSettings, boolean useVelocityPID) {
-        this(drivetrain, setpoint, () -> 0.0, () -> 0.0, pidSettings, feedForwardSettings, useVelocityPID);
+    public RotateSwerveWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> source,
+                               PIDSettings pidSettings, FeedForwardSettings feedForwardSettings,
+                               boolean useVelocityPID) {
+        this(drivetrain, setpoint, source, () -> 0.0, () -> 0.0, pidSettings, feedForwardSettings, useVelocityPID);
     }
 
     @Override
@@ -97,8 +101,7 @@ public class RotateSwerveWithPID extends Command { //@TODO change the name
         pidController.setIZone(pidSettings.getIZone());
         pidController.setTolerance(pidSettings.getTolerance());
         drivetrain.drive(xSpeed.get(), ySpeed.get(),pidController.calculate(
-                drivetrain.getAngle().getDegrees(), setpoint.get())
-                + feedForwardController.calculate(drivetrain.getAngle().getDegrees(),
+                source.get(), setpoint.get()) + feedForwardController.calculate(source.get(),
                 setpoint.get()), false, now - lastGivenTime, useVelocityPID);
         lastGivenTime = now;
     }

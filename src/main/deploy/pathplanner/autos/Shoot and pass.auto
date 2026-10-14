@@ -1,0 +1,56 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "aligned shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot and toss 2"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot and toss 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "collect"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot and toss 5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pass"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

@@ -1,0 +1,107 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.695077777777778,
+        "y": 3.4016111111111105
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.373511111111111,
+        "y": 1.608633333333332
+      },
+      "isLocked": false,
+      "linkedName": "flipped collect and shoot 1"
+    },
+    {
+      "anchor": {
+        "x": 6.564722222222223,
+        "y": 0.702399999999999
+      },
+      "prevControl": {
+        "x": 7.780335320068046,
+        "y": 0.962888520966956
+      },
+      "nextControl": {
+        "x": 6.32027161870287,
+        "y": 0.6500177278172816
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.648744444444444,
+        "y": 0.702399999999999
+      },
+      "prevControl": {
+        "x": 5.898744444444443,
+        "y": 0.702399999999999
+      },
+      "nextControl": {
+        "x": 5.398744444444444,
+        "y": 0.702399999999999
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.202888888888889,
+        "y": 0.702399999999999
+      },
+      "prevControl": {
+        "x": 4.303228739793854,
+        "y": 0.6822102779650449
+      },
+      "nextControl": {
+        "x": 2.2030571823939513,
+        "y": 0.7207455358989895
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.3064,
+        "y": 2.5733333333333324
+      },
+      "prevControl": {
+        "x": 2.2187,
+        "y": 0.9849888888888878
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -47.121096396661336
+  },
+  "reversed": false,
+  "folder": "Flipped collect and shoot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}
