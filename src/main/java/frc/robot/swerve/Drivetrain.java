@@ -120,105 +120,20 @@ public class Drivetrain extends SwerveDrivetrain {
         gyro.setYaw(angle);
     }
 
-    public Pose2d getEstimatedPose() {
-        return odometry.getEstimatedPosition();
-    }
-
-    public void resetPose(Pose2d newPose) {
-        odometry.resetPose(newPose);
-    }
-
     public void updateOdometry() {
         odometry.update(getAngle(), getSwerveModulePositions());
-    }
-
-    private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
-        boolean atPose = MathUtil.isNear(targetAxisPose, currentAxisPose, TRANSLATION_POSE_TOLERANCE);
-        boolean robotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
-        return atPose && robotStill;
-    }
-
-    private boolean atRotation(Rotation2d rotation2d) {
-        double error = rotation2d.minus(getAngle()).getDegrees();
-        boolean isAtRotation = Math.abs(error) <= ROTATION_TOLERANCE_IN_DEGREES;
-        boolean isRotationStill = Math.abs(getSpeeds().omegaRadiansPerSecond)
-                <= ROTATION_VELOCITY_TOLERANCE;
-        return isAtRotation && isRotationStill;
-    }
-
-    public boolean atPose(Pose2d pose2d) {
-        boolean atXAxis = atAxis(getEstimatedPose().getX(), pose2d.getX(),
-                getSpeeds().vxMetersPerSecond);
-        boolean atYAxis = atAxis(getEstimatedPose().getY(), pose2d.getY(),
-                getSpeeds().vyMetersPerSecond);
-        return atXAxis && atYAxis && atRotation(pose2d.getRotation());
-    }
-
-    public Pose2d getEstimatedPoseByLatency(ChassisSpeeds relativeSpeeds, double latencySeconds) {
-        double predictedXSpeed = relativeSpeeds.vxMetersPerSecond * latencySeconds;
-        double predictedYSpeed = relativeSpeeds.vyMetersPerSecond * latencySeconds;
-        Rotation2d predictedRotationSpeed =
-                Rotation2d.fromRadians(relativeSpeeds.omegaRadiansPerSecond * latencySeconds);
-        return getEstimatedPose().
-                transformBy(new Transform2d(predictedXSpeed, predictedYSpeed, predictedRotationSpeed));
     }
 
     @Override
     public void configureDashboard() {
         namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
-        namespace.putNumber("x", () -> getEstimatedPose().getX());
-        namespace.putNumber("y", () -> getEstimatedPose().getY());
-        namespace.putRunnable("reset odometry", () ->
-                odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
+                odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d());
         namespace.putRunnable("reset gyro to 0", () -> gyro.setYaw(0));
     }
-
-//    public void updateVision() {
-//        LimelightHelpers.SetRobotOrientation(
-//                "limelight", getAngle().getDegrees(), 0, 0, 0, 0, 0);
-//
-//        LimelightHelpers.PoseEstimate limelightMeasurement =
-//                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-//
-//        Pose2d pose = limelightMeasurement.pose;
-//        double timestamp = limelightMeasurement.timestampSeconds;
-//
-//        if (pose == null) return;
-//        addVisionMeasurement(pose, timestamp);
-//    }
-
-//    public void addVisionMeasurement(Pose2d visionPose, double timestamp) {
-//        odometry.addVisionMeasurement(visionPose, timestamp);
-//    }
-//
-//    public double getDistanceFromHub() {
-//        Pose2d robotPose = getEstimatedPose();
-//
-//        Translation2d hub = BLUE_HUB_CENTER;
-//        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
-//            hub = RED_HUB_CENTER;
-//        }
-//
-//        Translation2d delta = hub.minus(robotPose.getTranslation());
-//        return delta.getNorm();
-//    }
-
-//    public double getAngleFromHub() {
-//        Pose2d robotPose = getEstimatedPose();
-//
-//        Translation2d hub = BLUE_HUB_CENTER;
-//        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
-//            hub = RED_HUB_CENTER;
-//        }
-//
-//        Translation2d delta = hub.minus(robotPose.getTranslation());
-//        return delta.getAngle().getDegrees();
-//    }
 
     @Override
     public void periodic() {
         super.periodic();
         updateOdometry();
-//        updateVision();
     }
 }
