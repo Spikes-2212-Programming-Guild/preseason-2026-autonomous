@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-
+        OI oi = new OI();
     }
 
     @Override
