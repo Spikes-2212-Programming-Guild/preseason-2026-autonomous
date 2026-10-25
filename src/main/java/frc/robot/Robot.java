@@ -6,17 +6,23 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.subsystems.swerve.SwerveModuleHolder;
 
 public class Robot extends TimedRobot {
 
+    private Drivetrain drivetrain;
+
     @Override
     public void robotInit() {
-
+        CommandScheduler.getInstance().cancelAll();
+        drivetrain = Drivetrain.getInstance();
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        SwerveModuleHolder.updateNamespace();
     }
 
     @Override
