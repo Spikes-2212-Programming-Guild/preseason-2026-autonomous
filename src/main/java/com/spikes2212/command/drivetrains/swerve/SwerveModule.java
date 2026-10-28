@@ -27,13 +27,16 @@ public abstract class SwerveModule extends DashboardedSubsystem {
 
     protected final boolean driveMotorInverted;
     protected final boolean turnMotorInverted;
-    protected final double absoluteEncoderOffset;
+    protected double absoluteEncoderOffsetDegrees;
     protected final double minSpeedLimit;
 
     protected final PIDSettings driveMotorPIDSettings;
     protected final PIDSettings turnMotorPIDSettings;
     protected final FeedForwardSettings driveMotorFeedForwardSettings;
     protected final FeedForwardSettings turnMotorFeedForwardSettings;
+
+    protected boolean updateTurnPeriodically;
+    protected boolean updateDrivePeriodically;
 
 
     /**
@@ -44,7 +47,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param turnMotor                     the motor that is used fot turning the wheel in the yaw axis
      * @param driveMotorInverted            whether the drive motor is inverted or not
      * @param turnMotorInverted             whether the turn motor is inverted ot not
-     * @param absoluteEncoderOffset         absolute encoder offset while wheel is parallel to the track
+     * @param absoluteEncoderOffsetDegrees         absolute encoder offset while wheel is parallel to the track
      * @param driveMotorPIDSettings         the drive motor pid settings
      * @param turnMotorPIDSettings          the turn motor pid settings
      * @param driveMotorFeedForwardSettings the drive motor feed forward settings
@@ -52,26 +55,24 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param minSpeedLimit                    a speed limit intended for dealing with stick drift
      */
     public SwerveModule(String namespaceName, SmartMotorController driveMotor, SmartMotorController turnMotor,
-                        boolean driveMotorInverted, boolean turnMotorInverted, double absoluteEncoderOffset,
+                        boolean driveMotorInverted, boolean turnMotorInverted, double absoluteEncoderOffsetDegrees,
                         PIDSettings driveMotorPIDSettings, PIDSettings turnMotorPIDSettings,
                         FeedForwardSettings driveMotorFeedForwardSettings,
-                        FeedForwardSettings turnMotorFeedForwardSettings, double minSpeedLimit) {
+                        FeedForwardSettings turnMotorFeedForwardSettings, double minSpeedLimit,
+                        boolean updateDrivePeriodically, boolean updateTurnPeriodically) {
         super(namespaceName);
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.turnMotorInverted = turnMotorInverted;
         this.driveMotorInverted = driveMotorInverted;
-        this.absoluteEncoderOffset = absoluteEncoderOffset;
+        this.absoluteEncoderOffsetDegrees = absoluteEncoderOffsetDegrees;
         this.driveMotorPIDSettings = driveMotorPIDSettings;
         this.turnMotorPIDSettings = turnMotorPIDSettings;
         this.driveMotorFeedForwardSettings = driveMotorFeedForwardSettings;
         this.turnMotorFeedForwardSettings = turnMotorFeedForwardSettings;
         this.minSpeedLimit = minSpeedLimit;
-//        driveMotor.setInverted(driveMotorInverted);
-//        turnMotor.setInverted(!turnMotorInverted);
-//        configureTurnController();
-//        configureDriveController();
-//        configureAbsoluteEncoder();
+        this.updateDrivePeriodically = updateDrivePeriodically;
+        this.updateTurnPeriodically = updateTurnPeriodically;
     }
 
     /**
@@ -103,6 +104,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     public void setTargetState(SwerveModuleState targetState, double maxPossibleVelocity, boolean useVelocityPID) {
         if (targetState.speedMetersPerSecond < minSpeedLimit) {
             stop();
+            return;
         }
         targetState = optimize(targetState, getRelativeModuleAngle());
         setTargetAngle(targetState.angle);
@@ -150,7 +152,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      */
     public void setTargetAngle(Rotation2d targetAngle) {
         turnMotor.pidSet(UnifiedControlMode.POSITION, targetAngle.getDegrees(), turnMotorPIDSettings,
-                turnMotorFeedForwardSettings, true);
+                turnMotorFeedForwardSettings, updateTurnPeriodically);
     }
 
     /**
@@ -163,7 +165,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     public void setTargetVelocity(double targetVelocity, double maxPossibleVelocity, boolean useVelocityPID) {
         if (useVelocityPID) {
             driveMotor.pidSet(UnifiedControlMode.VELOCITY, targetVelocity, driveMotorPIDSettings,
-                    driveMotorFeedForwardSettings, true);
+                    driveMotorFeedForwardSettings, updateDrivePeriodically);
         } else {
             driveMotor.set(targetVelocity / maxPossibleVelocity);
         }

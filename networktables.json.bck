@@ -1,0 +1,386 @@
+[
+  {
+    "name": "/swerve module holder/turn pid/turn kP",
+    "type": "double",
+    "value": 12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn pid/turn kI",
+    "type": "double",
+    "value": 23.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn pid/turn kD",
+    "type": "double",
+    "value": 0.00015,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn pid/turn i zone",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn pid/turn tolerance",
+    "type": "double",
+    "value": 121.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn pid/turn wait time",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn feed forward/turn kS",
+    "type": "double",
+    "value": 1232.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn feed forward/turn kV",
+    "type": "double",
+    "value": 23.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn feed forward/turn kA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/turn feed forward/turn kG",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/front left/target angle",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/front right/target angle",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/back left/target angle",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/back right/target angle",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/front left/target velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/front right/target velocity",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/back left/target velocity",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/back right/target velocity",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive pid/drive kP",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive pid/drive kI",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive pid/drive kD",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive pid/drive i zone",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive pid/drive tolerance",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive pid/drive wait time",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive feed forward/drive kS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive feed forward/drive kV",
+    "type": "double",
+    "value": 0.195,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive feed forward/drive kA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/swerve module holder/drive feed forward/drive kG",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive pid/drive kP",
+    "type": "double",
+    "value": 0.01,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive pid/drive kI",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive pid/drive kD",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive pid/drive i zone",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive pid/drive tolerance",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive pid/drive wait time",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive feed forward/drive kS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive feed forward/drive kV",
+    "type": "double",
+    "value": 0.195,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive feed forward/drive kA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/drive feed forward/drive kG",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn pid/turn kP",
+    "type": "double",
+    "value": 0.0005,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn pid/turn kI",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn pid/turn kD",
+    "type": "double",
+    "value": 0.00015,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn pid/turn i zone",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn pid/turn tolerance",
+    "type": "double",
+    "value": 0.01,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn pid/turn wait time",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn feed forward/turn kS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn feed forward/turn kV",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn feed forward/turn kA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/module tuner/turn feed forward/turn kG",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

@@ -11,10 +11,7 @@ import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import frc.robot.RobotMap;
 
-// TODO - should back and right left turn should be inverted?
 public class SwerveModuleHolder {
-
-    private static final RootNamespace namespace = new RootNamespace("swerve module holder");
 
     private final static CANBus CANIVORE = new CANBus("canivore");
 
@@ -23,31 +20,20 @@ public class SwerveModuleHolder {
     private static final boolean BACK_LEFT_DRIVE_INVERTED = false;
     private static final boolean BACK_RIGHT_DRIVE_INVERTED = true;
 
-    private static final boolean FRONT_LEFT_TURN_INVERTED = false;
-    private static final boolean FRONT_RIGHT_TURN_INVERTED = false;
-    private static final boolean BACK_LEFT_TURN_INVERTED = false;
-    private static final boolean BACK_RIGHT_TURN_INVERTED = false;
+    private static final boolean FRONT_LEFT_TURN_INVERTED = true;
+    private static final boolean FRONT_RIGHT_TURN_INVERTED = true;
+    private static final boolean BACK_LEFT_TURN_INVERTED = true;
+    private static final boolean BACK_RIGHT_TURN_INVERTED = true;
+
+    private static final double FRONT_LEFT_OFFSET_DEGREES = 62.05078126;
+    private static final double FRONT_RIGHT_OFFSET_DEGREES = 27.421875;
+    private static final double BACK_LEFT_OFFSET_DEGREES = 159.08203125;
+    private static final double BACK_RIGHT_OFFSET_DEGREES = 162.86132812;
 
     private static final String FRONT_LEFT_NAMESPACE_NAME = "front left";
     private static final String FRONT_RIGHT_NAMESPACE_NAME = "front right";
     private static final String BACK_LEFT_NAMESPACE_NAME = "back left";
     private static final String BACK_RIGHT_NAMESPACE_NAME = "back right";
-
-    private static final double FRONT_LEFT_OFFSET = 62.05078126;
-    private static final double FRONT_RIGHT_OFFSET = 27.421875;
-    private static final double BACK_LEFT_OFFSET = 159.08203125;
-    private static final double BACK_RIGHT_OFFSET = 162.86132812;
-
-    private static final PIDSettings drivePIDSettings = new PIDSettings(0, 0, 0, 0,
-            0, 0);
-
-    private static final PIDSettings turnPIDSettings = namespace.addPIDNamespace("turn");
-
-    private static final FeedForwardSettings driveFeedForwardSettings = new FeedForwardSettings(0, 0,
-            0, FeedForwardController.ControlMode.LINEAR_VELOCITY);
-
-    private static final FeedForwardSettings turnFeedForwardSettings = namespace.addFeedForwardNamespace("turn",
-            FeedForwardController.ControlMode.LINEAR_POSITION);
 
     private static SwerveModuleRebuilt frontLeft;
     private static SwerveModuleRebuilt frontRight;
@@ -60,8 +46,7 @@ public class SwerveModuleHolder {
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_LEFT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_FRONT_LEFT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), FRONT_LEFT_DRIVE_INVERTED,
-                    FRONT_LEFT_TURN_INVERTED, FRONT_LEFT_OFFSET, drivePIDSettings, turnPIDSettings,
-                    driveFeedForwardSettings, turnFeedForwardSettings,
+                    FRONT_LEFT_TURN_INVERTED, FRONT_LEFT_OFFSET_DEGREES,
                     new CANcoder(RobotMap.CAN.SWERVE_FRONT_LEFT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return frontLeft;
@@ -73,8 +58,7 @@ public class SwerveModuleHolder {
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_RIGHT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_FRONT_RIGHT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), FRONT_RIGHT_DRIVE_INVERTED,
-                    FRONT_RIGHT_TURN_INVERTED, FRONT_RIGHT_OFFSET, drivePIDSettings, turnPIDSettings,
-                    driveFeedForwardSettings, turnFeedForwardSettings,
+                    FRONT_RIGHT_TURN_INVERTED, FRONT_RIGHT_OFFSET_DEGREES,
                     new CANcoder(RobotMap.CAN.SWERVE_FRONT_RIGHT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return frontRight;
@@ -86,8 +70,7 @@ public class SwerveModuleHolder {
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_LEFT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_BACK_LEFT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), BACK_LEFT_DRIVE_INVERTED,
-                    BACK_LEFT_TURN_INVERTED, BACK_LEFT_OFFSET, drivePIDSettings, turnPIDSettings,
-                    driveFeedForwardSettings, turnFeedForwardSettings,
+                    BACK_LEFT_TURN_INVERTED, BACK_LEFT_OFFSET_DEGREES,
                     new CANcoder(RobotMap.CAN.SWERVE_BACK_LEFT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return backLeft;
@@ -99,14 +82,9 @@ public class SwerveModuleHolder {
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_RIGHT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_BACK_RIGHT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), BACK_RIGHT_DRIVE_INVERTED,
-                    BACK_RIGHT_TURN_INVERTED, BACK_RIGHT_OFFSET, drivePIDSettings, turnPIDSettings,
-                    driveFeedForwardSettings, turnFeedForwardSettings,
+                    BACK_RIGHT_TURN_INVERTED, BACK_RIGHT_OFFSET_DEGREES,
                     new CANcoder(RobotMap.CAN.SWERVE_BACK_RIGHT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return backRight;
-    }
-
-    public static void updateNamespace() {
-        namespace.update();
     }
 }

@@ -9,6 +9,12 @@ import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.control.TrapezoidProfileSettings;
 import com.spikes2212.util.UnifiedControlMode;
+import edu.wpi.first.math.system.LinearSystem;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 /**
  * A {@link SmartMotorController} representation of a {@link SparkBase} motor controller.
@@ -48,6 +54,9 @@ public class SparkWrapper implements SmartMotorController {
      */
     private EncoderConfig encoderConfig;
 
+    private SparkSim sparkSim;
+    private DCMotorSim motorSim;
+
     /**
      * Constructs a new instance of {@link SparkWrapper} with a {@link SparkMax} as the motor controller.
      *
@@ -62,6 +71,25 @@ public class SparkWrapper implements SmartMotorController {
         sparkWrapper.sparkConfig = new SparkMaxConfig();
         sparkWrapper.configAccessor = ((SparkMax) (sparkWrapper.sparkBase)).configAccessor;
         return sparkWrapper;
+    }
+
+    public void configureSimulation(DCMotor motorModel, double gearing, double moi) {
+        sparkSim = new SparkSim(sparkBase, motorModel);
+        motorSim = new DCMotorSim(
+                LinearSystemId.createDCMotorSystem(motorModel, moi, gearing),
+                motorModel
+        );
+    }
+
+    public void updateSimulation(double dt) {
+        if (sparkSim == null || motorSim == null) {
+            return;
+        }
+        double batteryVoltage = RobotController.getBatteryVoltage();
+        motorSim.setInputVoltage(sparkSim.getAppliedOutput() * batteryVoltage);
+        motorSim.update(dt);
+        sparkSim.iterate(Units.radiansPerSecondToRotationsPerMinute(
+                motorSim.getAngularVelocityRadPerSec()), batteryVoltage, dt);
     }
 
     /**
@@ -252,7 +280,7 @@ public class SparkWrapper implements SmartMotorController {
         } else {
             source = sparkBase.getEncoder().getVelocity();
         }
-            sparkBase.getClosedLoopController().setReference(setpoint, controlMode.getSparkControlType(),
+        sparkBase.getClosedLoopController().setReference(setpoint, controlMode.getSparkControlType(),
                 ClosedLoopSlot.kSlot0, feedForwardController.calculate(source, setpoint, acceleration));
     }
 
