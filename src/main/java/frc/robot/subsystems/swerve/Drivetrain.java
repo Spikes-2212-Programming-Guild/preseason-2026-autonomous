@@ -28,7 +28,7 @@ public class Drivetrain extends SwerveDrivetrain implements Sendable {
     private static final double TRACK_LENGTH = 0.55;
     private static final int GYRO_OFFSET = 0;
 
-    private static final boolean IS_SIMULATION = true;
+    private static final boolean IS_SIMULATION = false;
 
     private final Pigeon2 gyro;
 

@@ -21,22 +21,25 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj2.command.Commands;
+
+import java.util.function.Supplier;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
     private static final RootNamespace MODULE_TUNER = new RootNamespace("module tuner");
 
-    private static final boolean UPDATE_TURN_PERIODICALLY = false;
-    private static final boolean UPDATE_DRIVE_PERIODICALLY = false;
+    private static final boolean UPDATE_TURN_PERIODICALLY = true;
+    private static final boolean UPDATE_DRIVE_PERIODICALLY = true;
 
     private static final PIDSettings DRIVE_PID_SETTINGS = MODULE_TUNER.addPIDNamespace("drive",
             new PIDSettings(0, 0, 0));
 
     private static final FeedForwardSettings DRIVE_FF_SETTINGS = MODULE_TUNER.addFeedForwardNamespace("drive",
-            new FeedForwardSettings(0.195, 0, FeedForwardController.ControlMode.LINEAR_VELOCITY));
+            new FeedForwardSettings(0, 0, FeedForwardController.ControlMode.LINEAR_VELOCITY));
 
     private static final PIDSettings TURN_PID_SETTINGS = MODULE_TUNER.addPIDNamespace("turn",
-            new PIDSettings(0.0005, 0, 0.00015, 0, 0, 10));
+            new PIDSettings(0, 0, 0, 0, 0, 0));
 
     private static final FeedForwardSettings TURN_FF_SETTINGS = MODULE_TUNER.addFeedForwardNamespace("turn",
             new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION));
@@ -56,7 +59,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private static final double TURN_POSITION_IN_ROTATION =
             TURN_GEAR_RATIO * DEGREES_IN_ROTATION;
 
-    private static final boolean IS_SIMULATION = true;
+    private static final boolean IS_SIMULATION = false;
 
     private final TalonFXWrapper driveMotor;
     private final SparkWrapper turnMotor;
@@ -161,35 +164,35 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     public void configureDashboard() {
-//        namespace.putNumber("drive velocity", this::getDrivingVelocity);
-//        namespace.putNumber("turn velocity", () -> getTurnMotor().getVelocity());
-//        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
-//        namespace.putNumber("relative encoder", this::getRelativeModuleAngle);
+        namespace.putNumber("drive velocity", this::getDrivingVelocity);
+        namespace.putNumber("turn velocity", () -> getTurnMotor().getVelocity());
+        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
+        namespace.putNumber("relative encoder", this::getRelativeModuleAngle);
 
-//        namespace.putCommand("turn at 0.1", Commands.runEnd(
-//                () -> turnMotor.set(0.1),
-//                turnMotor::stopMotor,
-//                this
-//        ));
+        namespace.putCommand("turn at 0.2", Commands.runEnd(
+                () -> turnMotor.set(0.2),
+                turnMotor::stopMotor,
+                this
+        ));
 
-//        namespace.putCommand("drive at 0.1", Commands.runEnd(
-//                () -> driveMotor.set(0.1),
-//                driveMotor::stopMotor,
-//                this
-//        ));
+        namespace.putCommand("drive at 0.2", Commands.runEnd(
+                () -> driveMotor.set(0.2),
+                driveMotor::stopMotor,
+                this
+        ));
 
-//        Supplier<Double> targetAngle = namespace.addConstantDouble("target angle", 0);
-//        namespace.putCommand("turn to angle", Commands.runEnd(() -> setTargetAngle(
-//                        Rotation2d.fromDegrees(targetAngle.get()), true),
-//                turnMotor::stopMotor,
-//                this
-//        ));
+        Supplier<Double> targetAngle = namespace.addConstantDouble("1target angle", 0);
+        namespace.putCommand("1turn to angle", Commands.runEnd(() -> setTargetAngle(
+                        Rotation2d.fromDegrees(targetAngle.get())),
+                turnMotor::stopMotor,
+                this
+        ));
 
-//        Supplier<Double> targetVelocity = namespace.addConstantDouble("target velocity", 0);
-//        namespace.putCommand("drive at velocity", Commands.runEnd(() -> setTargetVelocity(
-//                        targetVelocity.get(), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
-//                driveMotor::stopMotor,
-//                this
-//        ));
+        Supplier<Double> targetVelocity = namespace.addConstantDouble("target velocity", 0);
+        namespace.putCommand("drive at velocity", Commands.runEnd(() -> setTargetVelocity(
+                        targetVelocity.get(), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
+                driveMotor::stopMotor,
+                this
+        ));
     }
 }

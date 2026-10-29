@@ -1,10 +1,10 @@
 package frc.robot;
 
-import com.spikes2212.util.XboxControllerWrapper;
+import com.spikes2212.util.PlaystationControllerWrapper;
 
 public class OI {
 
-    private final XboxControllerWrapper controller = new XboxControllerWrapper(0);
+    private final PlaystationControllerWrapper controller = new PlaystationControllerWrapper(0);
 
     public OI() {
 
