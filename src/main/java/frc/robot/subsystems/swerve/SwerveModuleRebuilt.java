@@ -59,15 +59,15 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private static final double TURN_POSITION_IN_ROTATION =
             TURN_GEAR_RATIO * DEGREES_IN_ROTATION;
 
-    private static final boolean IS_SIMULATION = false;
+//    private static final boolean IS_SIMULATION = false;
 
     private final TalonFXWrapper driveMotor;
     private final SparkWrapper turnMotor;
     private final CANcoder cancoder;
 
-    private DCMotorSim driveMotorSim;
-    private TalonFXSimState talonFXSim;
-    private CANcoderSimState cancoderSim;
+//    private DCMotorSim driveMotorSim;
+//    private TalonFXSimState talonFXSim;
+//    private CANcoderSimState cancoderSim;
 
     public SwerveModuleRebuilt(String namespaceName, TalonFXWrapper driveMotor, SparkWrapper turnMotor,
                                boolean driveMotorInverted, boolean turnMotorInverted,
@@ -84,20 +84,20 @@ public class SwerveModuleRebuilt extends SwerveModule {
         driveMotor.setInverted(driveMotorInverted);
         turnMotor.setInverted(turnMotorInverted);
 
-        if (IS_SIMULATION) {
-            this.absoluteEncoderOffsetDegrees = 0;
-            turnMotor.configureSimulation(DCMotor.getNEO(1), 1.0, 0.001);
-            cancoderSim = cancoder.getSimState();
-            talonFXSim = driveMotor.getSim();
-            driveMotorSim = new DCMotorSim(
-                    LinearSystemId.createDCMotorSystem(
-                            DCMotor.getKrakenX60(1),
-                            0.025,
-                            6.12
-                    ),
-                    DCMotor.getKrakenX60(1)
-            );
-        }
+//        if (IS_SIMULATION) {
+//            this.absoluteEncoderOffsetDegrees = 0;
+//            turnMotor.configureSimulation(DCMotor.getNEO(1), 1.0, 0.001);
+//            cancoderSim = cancoder.getSimState();
+//            talonFXSim = driveMotor.getSim();
+//            driveMotorSim = new DCMotorSim(
+//                    LinearSystemId.createDCMotorSystem(
+//                            DCMotor.getKrakenX60(1),
+//                            0.025,
+//                            6.12
+//                    ),
+//                    DCMotor.getKrakenX60(1)
+//            );
+//        }
 
         configureTurnController();
         configureDriveController();
@@ -142,24 +142,24 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     public void simulationPeriodic() {
-
-        talonFXSim.setSupplyVoltage(RobotController.getBatteryVoltage());
-        driveMotorSim.setInputVoltage(talonFXSim.getMotorVoltage());
-
-        driveMotorSim.update(0.02);
-
-        double rotorPosition = driveMotorSim.getAngularPositionRotations() * 6.12;
-        double rotorVelocity = driveMotorSim.getAngularVelocityRPM() / 60.0 * 6.12;
-
-        talonFXSim.setRawRotorPosition(rotorPosition);
-        talonFXSim.setRotorVelocity(rotorVelocity);
-
-        turnMotor.updateSimulation(0.02);
-        double moduleAngleDegrees = turnMotor.getPosition();
-        double moduleRotations = moduleAngleDegrees / 360.0;
-        double offsetRotations = absoluteEncoderOffsetDegrees / 360.0;
-        double rawPosition = moduleRotations - offsetRotations;
-        cancoderSim.setRawPosition(rawPosition);
+//
+//        talonFXSim.setSupplyVoltage(RobotController.getBatteryVoltage());
+//        driveMotorSim.setInputVoltage(talonFXSim.getMotorVoltage());
+//
+//        driveMotorSim.update(0.02);
+//
+//        double rotorPosition = driveMotorSim.getAngularPositionRotations() * 6.12;
+//        double rotorVelocity = driveMotorSim.getAngularVelocityRPM() / 60.0 * 6.12;
+//
+//        talonFXSim.setRawRotorPosition(rotorPosition);
+//        talonFXSim.setRotorVelocity(rotorVelocity);
+//
+//        turnMotor.updateSimulation(0.02);
+//        double moduleAngleDegrees = turnMotor.getPosition();
+//        double moduleRotations = moduleAngleDegrees / 360.0;
+//        double offsetRotations = absoluteEncoderOffsetDegrees / 360.0;
+//        double rawPosition = moduleRotations - offsetRotations;
+//        cancoderSim.setRawPosition(rawPosition);
     }
 
     @Override
@@ -181,8 +181,8 @@ public class SwerveModuleRebuilt extends SwerveModule {
                 this
         ));
 
-        Supplier<Double> targetAngle = namespace.addConstantDouble("1target angle", 0);
-        namespace.putCommand("1turn to angle", Commands.runEnd(() -> setTargetAngle(
+        Supplier<Double> targetAngle = namespace.addConstantDouble("target angle", 0);
+        namespace.putCommand("turn to angle", Commands.runEnd(() -> setTargetAngle(
                         Rotation2d.fromDegrees(targetAngle.get())),
                 turnMotor::stopMotor,
                 this
